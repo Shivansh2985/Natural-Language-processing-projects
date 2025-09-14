@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Review - {{ title }}</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 30px; background:#f2f6fb; }
+.container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+select, textarea { width: 100%; padding: 10px; font-size: 14px; margin-top:8px; border-radius:6px; border:1px solid #ddd; }
+button { padding: 10px 14px; font-size: 16px; margin-top:10px; border-radius:6px; background:#1976d2; color:white; border:none; cursor:pointer; }
+.info { margin-top: 12px; padding: 12px; border-radius: 8px; background: #f7fbff; border: 1px solid #e3f0ff; }
+.positive { color: green; font-weight: bold; }
+.negative { color: darkred; font-weight: bold; }
+.bar { height: 16px; width: 100%; background: #eee; border-radius: 8px; overflow: hidden; margin-top: 8px; }
+.bar-fill { height: 100%; background: #4caf50; text-align: center; color: white; line-height: 16px; font-size: 12px; }
+a { text-decoration: none; color: #1976d2; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="{{ url_for('index') }}">&larr; Back to movies</a>
+<h1>{{ title }}</h1>
+
+
+<div class="info">
+<div>Rating: <strong>{{ info.stars }} / 5</strong> &nbsp; · &nbsp; {{ info.percent_positive }}% positive &nbsp; · &nbsp; {{ info.votes }} votes</div>
+<div class="bar">
+<div class="bar-fill" style="width: {{ info.percent_positive }}%;">{{ info.percent_positive }}%</div>
+</div>
+</div>
+
+
+<form method="post" style="margin-top:14px;">
+<label><strong>Pick a suggested review</strong></label>
+<select name="suggestion">
+<option value="">-- choose suggestion --</option>
+{% for s in suggestions %}
+<option value="{{ s }}">{{ s }}</option>
+{% endfor %}
+</select>
+
+
+<div style="margin-top:12px;">
+<label><strong>Or type your own review (optional)</strong></label>
+<textarea name="custom_review" rows="4" placeholder="Type a custom review..."></textarea>
+</div>
+
+
+<button type="submit">Predict & Vote</button>
+</form>
+
+
+{% if message %}
+<div style="margin-top:14px;">
+<strong>Result:</strong>
+{% if prediction_label == 1 %}
+<span class="positive">Positive 😀</span>
+{% elif prediction_label == 0 %}
+<span class="negative">Negative 😡</span>
+{% else %}
+{{ message }}
+{% endif %}
+<div style="margin-top:8px; color:#555">{{ message }}</div>
+</div>
+{% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Movie Sentiment Ratings</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 30px; background:#f7f7f7;}
+.movie-card { background: white; padding: 18px; border-radius: 10px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);}
+.movies { max-width: 800px; margin: 0 auto; }
+.rating { font-weight: bold; }
+.stars { color: #ffb400; }
+a.button { display:inline-block; margin-top:8px; padding:8px 12px; background:#1976d2; color:white; border-radius:6px; text-decoration:none;}
+
+.bottom{
+    text-align:center;
+}
+</style>
+</head>
+<body>
+<div class="movies">
+<h1>🎬 Movies — Overall Ratings</h1>
+{% for m in movies %}
+<div class="movie-card">
+<h2>{{ m.title }}</h2>
+<div class="rating">
+<span class="stars">★</span> {{ m.stars }} / 5
+&nbsp;·&nbsp; {{ m.percent_positive }}% positive &nbsp;·&nbsp; {{ m.votes }} votes
+</div>
+<a class="button" href="{{ url_for('movie_page', title=m.title) }}">Open & Review</a>
+</div>
+{% endfor %}
+</div>
+
+<div class="bottom">
+     <h1>&copy;2025 
+     Made by Shivansh Sharma. All rights reserved.</h1>
+</div>
+</body>
+</html>
